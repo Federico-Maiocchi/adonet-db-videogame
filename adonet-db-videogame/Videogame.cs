@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace adonet_db_videogame
 {
@@ -20,23 +21,53 @@ namespace adonet_db_videogame
 
         public DateTime CreatetAt {  get; set; }
 
-        public DateTime UpdateAt {  get; set; }
+        public DateTime UpdatedAt {  get; set; }
 
         public int SoftwareHouse {  get; set; }
         
-        public Videogame(int id, string name, string overview, DateTime release_date, DateTime create_at, DateTime update_at, int software_house) 
+        public Videogame(int id, string name, string overview, DateTime releaseDate, DateTime createAt, DateTime updatedAt, int softwareHouse) 
         {
 
             Id = id;
             Name = name;
             Overview = overview;
-            ReleaseDate = release_date;
-            CreatetAt = create_at;
-            UpdateAt = update_at;
-            SoftwareHouse = software_house;
+            ReleaseDate = releaseDate;
+            CreatetAt = createAt;
+            UpdatedAt = updatedAt;
+            SoftwareHouse = softwareHouse;
         }
 
     }
 
-    
+    public static class VideogameManager 
+    {
+        static void InsertVideogame(int id, string name, string overview, DateTime release_date, DateTime created_at, DateTime updated_at, int software_house)
+        {
+            Videogame NewVideogame = new Videogame(id, name, overview, release_date, created_at, updated_at, software_house);
+
+        }
+
+        static void GetVideogameByID()
+        {
+
+        }
+
+        static void SearchVideogameByName()
+        {
+
+        }
+
+        static void CancelVideogame()
+        {
+
+        }
+
+        static void CloseProgram ()
+        {
+
+        }
+
+
+    }
+
 }
