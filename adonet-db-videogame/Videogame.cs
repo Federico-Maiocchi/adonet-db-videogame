@@ -84,28 +84,33 @@ namespace adonet_db_videogame
 
         }
 
-        public static void GetVideogameByID()
+        public static void GetVideogameByID(int id)
         {
-            
-
             using SqlConnection sqlConnection = new SqlConnection(stringConnection);
 
             try
             {
                 sqlConnection.Open();
+
                 string query = @"SELECT *
                 FROM videogames 
-                WHERE id = '5'";
+                WHERE id = @id ";
 
                 using SqlCommand cmd = new SqlCommand(query, sqlConnection);
+
+                cmd.Parameters.AddWithValue("@id", id);
 
                 using SqlDataReader reader = cmd.ExecuteReader();
 
                 while(reader.Read())
                 {
-                    int indexVideogame = reader.GetOrdinal("id");
+                    //int indexVideogame = reader.GetOrdinal("id");
                     string nameVideogame = reader.GetString("name");
-                    Console.WriteLine(nameVideogame);
+                    string overviewVideogame = reader.GetString(reader.GetOrdinal("overview"));
+                    DateTime releaseDateVideogame = reader.GetDateTime(reader.GetOrdinal("release_date"));
+                    //DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                    //DateTime updatedAt = reader.GetDateTime(reader.GetOrdinal("updated_at"));
+                    Console.WriteLine($"Nome {nameVideogame}, Descrizione {overviewVideogame}, data di uscita {releaseDateVideogame} ");
                    
                 }
 
@@ -118,6 +123,7 @@ namespace adonet_db_videogame
 
         static void SearchVideogameByName()
         {
+
 
         }
 

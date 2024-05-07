@@ -4,8 +4,10 @@
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Cerca un gioco per il suo id");
+            int searchGameId = int.Parse(Console.ReadLine());   
 
-            VideogameManager.GetVideogameByID();
+            VideogameManager.GetVideogameByID(searchGameId);
 
             Console.WriteLine("Inserisci il nome del videogioco:");
             string name = Console.ReadLine();
