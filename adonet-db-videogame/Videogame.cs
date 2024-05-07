@@ -98,7 +98,7 @@ namespace adonet_db_videogame
 
                 using SqlCommand cmd = new SqlCommand(query, sqlConnection);
 
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.Add(new SqlParameter("@id", id));
 
                 using SqlDataReader reader = cmd.ExecuteReader();
 
@@ -121,15 +121,69 @@ namespace adonet_db_videogame
             }
         }
 
-        static void SearchVideogameByName()
+        public static void SearchVideogameByName(string name)
         {
+            
 
+            using SqlConnection sqlConnection = new SqlConnection(stringConnection);
 
+            try
+            {
+                sqlConnection.Open();
+
+                string query = @"SELECT *
+                FROM videogames
+                WHERE name LIKE '@name'";
+
+                using SqlCommand cmd = new SqlCommand(query, sqlConnection);
+
+                cmd.Parameters.Add(new SqlParameter("@name","%" + name + "%"));
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    //int indexVideogame = reader.GetOrdinal("id");
+                    string nameVideogame = reader.GetString(reader.GetOrdinal("name"));
+                    string overviewVideogame = reader.GetString(reader.GetOrdinal("overview"));
+                    DateTime releaseDateVideogame = reader.GetDateTime(reader.GetOrdinal("release_date"));
+                    //DateTime createdAt = reader.GetDateTime(reader.GetOrdinal("created_at"));
+                    //DateTime updatedAt = reader.GetDateTime(reader.GetOrdinal("updated_at"));
+                    Console.WriteLine($"Nome {nameVideogame}, Descrizione {overviewVideogame}, data di uscita {releaseDateVideogame} ");
+
+                    //Videogame game = new Videogame(nameVideogame, overviewVideogame, releaseDateVideogame, DateTime.Now, DateTime.Now, 0);
+                    //videogames.Add(game);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
+
+            
         }
 
-        static void CancelVideogame()
+        public static void CancelVideogame(int id)
         {
+            using SqlConnection sqlConnection = new SqlConnection(stringConnection);
 
+            try
+            {
+
+                sqlConnection.Open();
+
+                string query = @"DELETE videogames WHERE id = @id";
+
+                using SqlCommand cmd = new SqlCommand( query, sqlConnection);
+
+                cmd.Parameters.Add(new SqlParameter("id", id));
+
+
+            } catch (Exception ex)
+            {
+                Console.Write(ex.ToString());
+            }
         }
 
         static void CloseProgram ()
